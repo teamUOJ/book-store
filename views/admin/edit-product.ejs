@@ -1,0 +1,165 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+<!--===============================================================================================-->	
+<link rel="icon" type="image/png" href="../../images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <div class="limiter">
+            <div class="container-login100">
+                <div class="wrap-login100">
+     
+        <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="POST" enctype="multipart/form-data">
+            <span class="login100-form-title">  <% if (editing) { %>Update Book<% } else { %>Add Book<% } %></span>
+            <% if (errorMessage) { %>
+                <div class="user-message user-message--error"><%= errorMessage %></div>
+            <% } %>
+            <div class="wrap-input100 validate-input m-b-16" style="margin-bottom: 16px;">    
+                <input 
+                    class="input100" 
+                    class="<%= validationErrors.find(e => e.param === 'title') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="title" 
+                    id="title" 
+                    value="<% if (editing || hasError) { %><%= product.title %><% } %>"
+                    placeholder="Title">
+                    <span class="focus-input100"></span>
+            </div>
+            <!-- <div class="form-control">
+                <label for="imageUrl">Image URL</label>
+                <input 
+                    class="<%= validationErrors.find(e => e.param === 'imageUrl') ? 'invalid' : '' %>"
+                    type="text" 
+                    name="imageUrl" 
+                    id="imageUrl" 
+                    value="<% if (editing || hasError) { %><%= product.imageUrl %><% } %>">
+            </div> -->
+            <div class="wrap-input100 validate-input m-b-16" style="margin-bottom: 16px;">
+               
+                <input 
+                   class="input100" 
+                    type="file" 
+                    name="image" 
+                    id="image" 
+                    placeholder="Image">
+                    <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input m-b-16" style="margin-bottom: 16px;" >
+      
+                <input 
+                    class="input100" 
+                    class="<%= validationErrors.find(e => e.param === 'price') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="price" 
+                    id="price" 
+                    step="0.01" 
+                    value="<% if (editing || hasError) { %><%= product.price %><% } %>"
+                    placeholder="Price">
+                    <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input m-b-16" style="margin-bottom: 16px;" >
+      
+                <input 
+                    class="input100" 
+                    class="<%= validationErrors.find(e => e.param === 'price') ? 'invalid' : '' %>"
+                    type="number" 
+                    name="quantity" 
+                    id="quantity" 
+                    step="1" 
+                    value="<% if (editing || hasError) { %><%= product.quantity %><% } %>"
+                    placeholder="Quantity">
+                    <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input m-b-16" style="margin-bottom: 16px;">
+               
+                <textarea 
+                    class="input100" 
+                    class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : '' %>"
+                    name="description" 
+                    id="description" 
+                    rows="5"
+                    placeholder="Description"><% if (editing || hasError) { %><%= product.description %><% } %></textarea>
+                    <span class="focus-input100"></span>
+            </div>
+            <div class="wrap-input100 validate-input m-b-16" style="margin-bottom: 16px;">
+               
+                <textarea 
+                    class="input100" 
+                    class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : '' %>"
+                    name="author" 
+                    id="author" 
+                    rows="2"
+                    placeholder="author"><% if (editing || hasError) { %><%= product.author %><% } %></textarea>
+                    <span class="focus-input100"></span>
+            </div>
+          
+            
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" value="false" id="NotAllowed" name="AllowedOrNot">
+                <label class="custom-control-label" for="NotAllowed">Not allowed to order</label>
+            </div>
+            
+            <div class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" value="true" id="Allowed" name="AllowedOrNot" checked>
+                <label class="custom-control-label" for="Allowed">allowed to order</label>
+            </div>
+
+            <div class="container-login100-form-btn" style="margin-bottom: 16px;">
+                <button class="login100-form-btn" type="submit">
+                    <% if (editing) { %>Update Book<% } else { %>Add Book<% } %>
+                </button>
+            </div>
+            <% if (editing) { %>
+                <input type="hidden" value="<%= product._id %>" name="productId">
+            <% } %>
+
+            
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+        </form>
+
+        </div>
+    </div>
+</div>
+    </main>
+
+
+     <!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="vendor/bootstrap/js/popper.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+        <script src="vendor/daterangepicker/moment.min.js"></script>
+        <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+        <script src="vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="/js/main2.js"></script>
+<%- include('../includes/end.ejs') %>
