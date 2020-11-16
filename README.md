@@ -1,6 +1,6 @@
 # book-store
 online book store
 developed by,
-2017/E/003
-2017/E032
-2017/E120
+Abeysinghe - 2017/E/003,
+Fernando M.S.D - 2017/E032,
+Warusamana W.D.I.S- 2017/E120 
